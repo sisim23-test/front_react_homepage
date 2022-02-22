@@ -8,6 +8,7 @@ import Login from './component/member/Login';
 
 import {Route, Routes, BrowserRouter} from 'react-router-dom';
 import BoardList from './component/board/BoardList';
+import ArticleForm from './component/board/ArticleForm';
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/member/login/" element={<Login />} />
               <Route path="/board/list" element={<BoardList />} />
-            
+              <Route path="/board/articleForm" element={<ArticleForm />} />
             </Routes>
           </div>
           <Footer />

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './BoardList.css';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 //useEffect(callback, dependency array[])
 //useEffect(callback) : 모든 update, upmount 시 callback 무조건 수행
@@ -26,13 +27,14 @@ const BoardList = ( ) => {
         <div>
             <table style={{align:"center", border:"1", width:"80%"}}>
                 <thead>
-                    <tr style={{height:"10", align:"center", bgcolor:"lightgreen"}}>
+                    <tr style={{height:"10", align:"center", backgroundColor:"lightgreen"}}>
                         <th>글번호</th>
                         <th>작성자</th>
                         <th>제목</th>
                         <th>작성일</th>
                     </tr>
                 </thead>
+                <tbody>
                     {boardList.length===0 ?  
                       <tr>
                           <td colSpan="4">
@@ -55,10 +57,9 @@ const BoardList = ( ) => {
                           )
                       })
                     }
-                <tbody>
-
                 </tbody>
             </table>
+            <Link className="cls1" to="/board/articleForm"><p className="cls2">글쓰기</p></Link>
         </div>
     );
 }
