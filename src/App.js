@@ -7,6 +7,7 @@ import Home from './Home';
 import Login from './component/member/Login';
 
 import {Route, Routes, BrowserRouter} from 'react-router-dom';
+import BoardList from './component/board/BoardList';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/member/login/" element={<Login />} />
+              <Route path="/board/list" element={<BoardList />} />
             
             </Routes>
           </div>
