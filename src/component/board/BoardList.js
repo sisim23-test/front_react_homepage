@@ -49,9 +49,25 @@ const BoardList = ( ) => {
                       boardList.map((article, key) => {
                           return(
                               <tr style={{align:"center"}} key={key}>
-                                  <td style={{width:"5%"}}> {key} </td>
+                                  <td style={{width:"5%"}}> {article.articleNO} </td>
                                   <td style={{width:"10%"}}> {article.id} </td>
-                                  <td style={{align:"left", width:"35%"}}> {article.title} </td>
+                                  <td style={{textAlign:"left", width:"35%"}}> 
+                                  {  (() => {
+                                        let result = [];
+                                        if(article.level > 1) {
+                                            for(let i=0; i<article.level; i++) {
+                                                result.push(<span key={i} style={{paddingLeft:"10px"}}></span>)
+                                            }
+
+                                            result.push(<span style={{fontSize:"12px"}}>[답변]</span>);
+                                        }
+
+                                        result.push(<Link to={`/board/viewArticle/${article.articleNO}`}>{article.title}</Link>);
+                                        return (result);
+                                    }
+                                    )()
+                                  }
+                                  </td>
                                   <td style={{width:"10%"}}> {article.writeDate} </td>
                               </tr>
                           )

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const ArticleForm = () => {
+    const baseUrl = "http://localhost:8090";
+
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [imageFileName, setImageFileName] = useState('');
@@ -33,15 +35,15 @@ const ArticleForm = () => {
                 <tbody>
                     <tr>
                         <td style={{align:"right"}}>작성자: </td>
-                        <td style={{colSpan:2, align:"left"}}><input type="text" style={{size:"20", maxLength:"100"}} value="홍길동" readOnly/></td>
+                        <td colSpan="2" align="left"><input type="text" size="20" maxLength="100" value="홍길동" readOnly/></td>
                     </tr>
                     <tr>
                         <td style={{align:"right"}}>글제목: </td>
-                        <td style={{colSpan:2, align:"left"}}><input type="text" style={{size:"67",  maxLength:"500", name:"title"}} /></td>
+                        <td colSpan="2" align="left"><input type="text" name="title" size="67"  maxLength="500" /></td>
                     </tr>
                     <tr>
                         <td style={{align:"right"}}>글내용: </td>
-                        <td style={{colSpan:2, align:"left"}}><textarea name="content" rows="10" colos="65" maxLength="4000" ></textarea></td>
+                        <td colSpan="2" align="left"><textarea name="content" rows="10" cols="65" maxLength="4000" ></textarea></td>
                     </tr>
                     <tr>
                         <td style={{align:"right"}}>이미지파일 첨부: </td>
