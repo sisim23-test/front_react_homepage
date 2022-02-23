@@ -18,7 +18,7 @@ const Header = ( ) => {
                     <img src='/images/common/duke_swing.gif' alt='home'/>
                 </Link>
             </p>
-            <h1><font style={{size:30}}>스프링 홈페이지!</font></h1>
+            <h1>스프링 홈페이지!</h1>
             <div>
                 {console.log(sessionStorage.getItem('success'))}
                 { sessionStorage.getItem('success')==='true'?
