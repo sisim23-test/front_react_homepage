@@ -1,8 +1,13 @@
+import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
+//useHistory(),                         useNavigate()
+//const history = useHistory()          const navigate = useNavigate()
+//history.push("/home")                 navigate("/home")
 const ArticleForm = () => {
     const baseUrl = "http://localhost:8090";
+    const navigate = useNavigate();             //5버전까지는 history사용, 6버전부터 navigate
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
@@ -24,8 +29,26 @@ const ArticleForm = () => {
 
     }
 
-    const handleWrite = ( ) => {
+    const handleWrite = async( ) => {
 
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("content", content);
+        formData.append("imageFileName", imageFileName);
+        formData.append("name", sessionStorage.getItem("name"));
+        formData.append("id", sessionStorage.getItem("userId"));
+
+        await axios
+            .post(baseUrl+'/board/addNewArticle', formData,
+                    {headers : {"Content-Type":"multipart/form-data; boundary=${formData._boundary}"}})
+            .then((response) => {
+                alert(response.data.message);
+                navigate(response.data.path);
+
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     }
     
     return (
@@ -35,15 +58,15 @@ const ArticleForm = () => {
                 <tbody>
                     <tr>
                         <td style={{align:"right"}}>작성자: </td>
-                        <td colSpan="2" align="left"><input type="text" size="20" maxLength="100" value="홍길동" readOnly/></td>
+                        <td colSpan="2" align="left"><input type="text" size="20" maxLength="100" value={sessionStorage.getItem('name')} readOnly/></td>
                     </tr>
                     <tr>
                         <td style={{align:"right"}}>글제목: </td>
-                        <td colSpan="2" align="left"><input type="text" name="title" size="67"  maxLength="500" /></td>
+                        <td colSpan="2" align="left"><input type="text" name="title" size="67"  maxLength="500" onChange={(e) => {setTitle(e.target.value)}}/></td>
                     </tr>
                     <tr>
                         <td style={{align:"right"}}>글내용: </td>
-                        <td colSpan="2" align="left"><textarea name="content" rows="10" cols="65" maxLength="4000" ></textarea></td>
+                        <td colSpan="2" align="left"><textarea name="content" rows="10" cols="65" maxLength="4000" onChange={(e) => {setContent(e.target.value)}}></textarea></td>
                     </tr>
                     <tr>
                         <td style={{align:"right"}}>이미지파일 첨부: </td>
@@ -61,6 +84,7 @@ const ArticleForm = () => {
                         <td style={{align:"right"}}></td>
                         <td colSpan="2">
                             <Link to="/" onClick={handleWrite} >글쓰기</Link>
+                            <span style={{paddingLeft:"10px"}}></span>
                             <Link to="/" >목록보기</Link>
                         </td>
                     </tr>               
