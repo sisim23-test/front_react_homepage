@@ -1,13 +1,16 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { baseUrl } from "../../config";
 
-//useHistory(),                         useNavigate()
+//https://velog.io/@soryeongk/ReactRouterDomV6#6-usehistory%EB%8C%80%EC%8B%A0-usenavigate
+//useHistory( ),                        useNavigate()
 //const history = useHistory()          const navigate = useNavigate()
-//history.push("/home")                 navigate("/home")
+// history.push("/home")                navigate("/home")
+
 const ArticleForm = () => {
-    const baseUrl = "http://localhost:8090";
-    const navigate = useNavigate();             //5버전까지는 history사용, 6버전부터 navigate
+    //const baseUrl = "http://localhost:8090";
+    const navigate = useNavigate();
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
@@ -19,7 +22,6 @@ const ArticleForm = () => {
             reader.onloadend = function () {
                 document.getElementById("preview").setAttribute('src', reader.result);
             }
-
             reader.readAsDataURL(e.target.files[0]);
             setImageFileName(e.target.files[0]);
         }
@@ -40,7 +42,7 @@ const ArticleForm = () => {
 
         await axios
             .post(baseUrl + '/board/addNewArticle', formData,
-                { headers: { "Content-Type": "multipart/form-data; boundary=${formData._boundary}" } })
+                { headers: { "Content-Type": "multipart/form-data; boundary=${formData._boundary" } })
             .then((response) => {
                 alert(response.data.message);
                 navigate(response.data.path);
@@ -57,23 +59,26 @@ const ArticleForm = () => {
             <table style={{ border: "0", align: "center" }}>
                 <tbody>
                     <tr>
-                        <td style={{ align: "right" }}>작성자: </td>
-                        <td colSpan="2" align="left"><input type="text" size="20" maxLength="100" value={sessionStorage.getItem('name')} readOnly /></td>
+                        <td style={{ align: "right" }}> 작성자</td>
+                        <td style={{ colSpan: 2, align: "left" }}><input type="text" size="20" maxLength="100" value={sessionStorage.getItem("name")} readOnly /> </td>
                     </tr>
+
                     <tr>
                         <td style={{ align: "right" }}>글제목: </td>
-                        <td colSpan="2" align="left"><input type="text" name="title" size="67" maxLength="500" onChange={(e) => { setTitle(e.target.value) }} /></td>
+                        <td style={{ colSpan: "2" }}><input type="text" size="67" maxLength="500" name="title" onChange={(e) => { setTitle(e.target.value) }} /></td>
                     </tr>
+
                     <tr>
-                        <td style={{ align: "right" }}>글내용: </td>
-                        <td colSpan="2" align="left"><textarea name="content" rows="10" cols="65" maxLength="4000" onChange={(e) => { setContent(e.target.value) }}></textarea></td>
+                        <td style={{ align: "right", valign: "top" }}>글내용: </td>
+                        <td style={{ colSpan: "2" }}><textarea name="content" rows="10" cols="65" maxLength="4000" onChange={(e) => { setContent(e.target.value) }}></textarea> </td>
                     </tr>
+
                     <tr>
-                        <td style={{ align: "right" }}>이미지파일 첨부: </td>
-                        <td><input type="file" name="imageFileName" onChange={readURL} /></td>
+                        <td style={{ align: "right" }}>이미지파일 첨부:  </td>
+                        <td> <input type="file" name="imageFileName" onChange={readURL} /></td>
                         <td><img id="preview" style={{ width: "200px", height: "200px" }} alt="preview" /></td>
                         <td style={{ align: "right" }}>이미지파일 첨부</td>
-                        <td style={{ align: "left" }}><input type="button" value="파일 추가" onClick={fn_addFile} /></td>
+                        <td style={{ align: "left" }}> <input type="button" value="파일 추가" onClick={fn_addFile} /></td>
                     </tr>
 
                     <tr>
@@ -81,17 +86,16 @@ const ArticleForm = () => {
                     </tr>
 
                     <tr>
-                        <td style={{ align: "right" }}></td>
+                        <td style={{ align: "right" }}> </td>
                         <td colSpan="2">
-                            <Link to="/" onClick={handleWrite} >글쓰기</Link>
-                            <span style={{ paddingLeft: "10px" }}></span>
-                            <Link to="/" >목록보기</Link>
+                            <Link to="/" onClick={handleWrite}>글쓰기 </Link>
+                            <Link to="/board/list"  >목록보기</Link>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-    );
+    )
 }
 
 export default ArticleForm;
